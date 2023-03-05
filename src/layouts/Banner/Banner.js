@@ -1,16 +1,30 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
-import { ReactComponent as Logo } from '../../assets/images/logos/stc.svg';
-import { ReactComponent as LangIcon } from '../../assets/images/icons/globe.svg';
-import { ReactComponent as Fileicon } from '../../assets/images/icons/file.svg';
+import { ReactComponent as Logo } from "../../assets/images/logos/stc.svg";
+import { ReactComponent as LangIcon } from "../../assets/images/icons/globe.svg";
+import { ReactComponent as Fileicon } from "../../assets/images/icons/file.svg";
 
-import './Banner.scss';
-import Button from '../../components/Button';
-import Title from '../../components/Title/Title';
-import Subtitle from '../../components/Subtitle/Subtitle';
-import Input from '../../components/Input/Input';
+import "./Banner.scss";
+import Button from "../../components/Button";
+import Title from "../../components/Title/Title";
+import Subtitle from "../../components/Subtitle/Subtitle";
+import Input from "../../components/Input/Input";
+import { useState } from "react";
 
-const Banner = () => {
+const Banner = ({ onClick }) => {
+  const [isArabic, setIsArabic] = useState("");
+
+  const handleClick = () => {
+    const language = localStorage.getItem("locale");
+    if (language === "ar") {
+      onClick("en");
+      setIsArabic("en");
+    } else {
+      onClick("ar");
+      setIsArabic("ar");
+    }
+  };
+
   return (
     <div className="banner ">
       <div className="banner__box">
@@ -44,7 +58,9 @@ const Banner = () => {
         <div className="container d-flex align-items-center justify-content-between">
           <Logo />
           <div className="banner__lang-icon d-flex align-items-center">
-            <span>عربي</span>
+            <span onClick={handleClick}>
+              {isArabic === "ar" ? "English" : "عربي"}
+            </span>
             <LangIcon />
           </div>
         </div>
